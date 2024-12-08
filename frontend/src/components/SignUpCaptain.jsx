@@ -2,10 +2,15 @@ import React from 'react'
 import Navbar from './shared/Navbar'
 import taxi from '../../src/Images/taxi.avif'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
+import toast from 'react-hot-toast'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Captain } from '../../../Backend/models/captain.model'
+import { CAPTAIN_REGISTER_API } from '../utils/constants'
 
 const SignUpCaptain = () => {
+  const navigate = useNavigate();
   const [input, setInput] = useState({
     firstName: '',
     lastName: '',
@@ -18,11 +23,53 @@ const SignUpCaptain = () => {
   })
   function handleChange(e){
     setInput({...input, [e.target.name]: e.target.value});
-    console.log("Input is", input);
+    // console.log("Input is", input);
   }
-  function handleSubmit(e){
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Final data is ", input);
+    // console.log("Final data is ", input);
+    const sendData = {
+      firstName: input.firstName,
+      lastName: input.lastName,
+      email: input.email,
+      password: input.password,
+      vehicle: {
+        color: input.color,
+        plate: input.plate,
+        capacity: input.capacity,
+        vehicleType: input.vehicleType
+      }
+    }
+    try{
+      const link = CAPTAIN_REGISTER_API;
+      const res = await axios.post(link, sendData, {
+        header: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      if(res.data.success){
+        toast.success("Captain registered successfully.");
+        setInput({
+          firstName: '',
+          lastName: '',
+          email: '',
+          password: '',
+          color: '',
+          plate: '',
+          capacity: 0,
+          vehicleType: ''
+        })
+        navigate('/');
+        localStorage.setItem('token', res.data.token);
+      }else{
+        toast.error(res.data.message);
+      }
+    }
+    catch(err){
+      console.log("Error is ", err);
+    }
+
   }
   return (
     <div>

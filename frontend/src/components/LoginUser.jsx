@@ -1,21 +1,49 @@
 import React from 'react'
 import Navbar from './shared/Navbar'
 import lights from '../../src/Images/lights.avif'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from 'react';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { USER_LOGIN_API } from '../utils/constants';
 
 const LogInUser = () => {
+  const navigate = useNavigate();
   const [input, setInput] = useState({
     email: '',
     password: ''
   })
   function handleChange(e){
     setInput({...input, [e.target.name]: e.target.value});
-    console.log("Input is", input);
+    // console.log("Input is", input);
   }
-  function handleSubmit(e){
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Final data is ", input);
+    try{
+      const link = USER_LOGIN_API;
+      const res = await axios.post(link, input, {
+          headers:{
+            "Content-Type": "application/json"
+          },
+          withCredentials: true
+      })
+      if(res.data.success){
+        toast.success(res.data.message);
+        navigate('/');
+        localStorage.setItem('token', res.data.token);
+        setInput({
+          email: '',
+          password: ''
+        })
+      }else{
+        toast.error(res.data.message);
+      }
+    }
+    catch(err){
+      console.log("Error occured in handleSubmit function in LoginUser.jsx", err);
+      toast.error("Internal Server Error occured.");
+    }
+
   }
   return (
     <div>

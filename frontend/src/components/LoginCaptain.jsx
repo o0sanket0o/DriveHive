@@ -16,11 +16,11 @@ const LoginCaptain = () => {
   })
   function handleChange(e){
     setInput({...input, [e.target.name]: e.target.value});
-    console.log("Input is", input);
+    // console.log("Input is", input);
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Final data is ", input);
+    // console.log("Final data is ", input);
     const link = CAPTAIN_LOGIN_API;
     try{
       const res = await axios.post(link, input, {
@@ -66,7 +66,7 @@ const LoginCaptain = () => {
               <div className='w-full'>
               <button onClick={handleSubmit} className='bg-black text-white p-2 rounded w-full mt-2 mb-4'>Login</button>
               <p>Join as a user?<Link to='/signUser' className='text-blue-500 hover:underline'>Register as a user</Link> </p>
-              <p>Don't have an account?<Link to='/signUser' className='text-blue-500 hover:underline'>Sign Up</Link> </p>
+              <p>Don't have an account?<Link to='/signCaptain' className='text-blue-500 hover:underline'>Sign Up</Link> </p>
               </div>
             </div>
           </form>
