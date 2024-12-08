@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.model.js";
 import blacklistTokenModel from "../models/blacklistToken.model.js";
+import { Captain } from "../models/captain.model.js";
 
 export const isAuthenticated = async (req, res, next) => {
     try{
@@ -23,5 +24,21 @@ export const isAuthenticated = async (req, res, next) => {
     }
     catch(err){
         console.log("Error occured in isAuthenticated function in isAuthenticated.js", err);
+    }
+}
+export const isAuthCaptain = async (req, res, next) => {
+    try{
+        const token = req.cookies.token || req.headers?.authorization?.split(" ")[1];
+        if(!token) return res.status(401).json({message: "Unauthorized"});
+        const isBlacklisted = await blacklistTokenModel.findOne({token: token});
+        if(isBlacklisted) return res.status(401).json({message:"Unauthorized"});
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        if(!decoded) return res.status(401).json({message: "Unauthorized"});
+        const captainInDb = await Captain.findById(decoded.id);
+        req.captain = captainInDb;
+        next();
+    }
+    catch(err){
+        console.log("Error occured in isAuthCaptain function in isAuthenticated.js", err);
     }
 }

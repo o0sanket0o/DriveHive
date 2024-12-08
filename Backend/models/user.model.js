@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
     },
     socketId: {
         type: String,
-        //For knowing the location of the driver.
+        //For sharing the locations.
     }
 }, {timestamps: true})
 
