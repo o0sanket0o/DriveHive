@@ -6,8 +6,12 @@ import { useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { USER_LOGIN_API } from '../utils/constants';
+import {useDispatch, useSelector} from "react-redux";
+import { setUser } from '../redux/authSlice';
+
 
 const LogInUser = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [input, setInput] = useState({
     email: '',
@@ -27,10 +31,13 @@ const LogInUser = () => {
           },
           withCredentials: true
       })
+      // console.log("Response is", res);
       if(res.data.success){
+        dispatch(setUser(res.data.user));
         toast.success(res.data.message);
         navigate('/');
         localStorage.setItem('token', res.data.token);
+        localStorage.setItem('user', JSON.stringify(res.data.user));
         setInput({
           email: '',
           password: ''

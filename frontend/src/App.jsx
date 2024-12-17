@@ -8,6 +8,10 @@ import SignUpUser from './components/SignUpUser'
 import LoginUser from './components/LoginUser'
 import SignUpCaptain from './components/SignUpCaptain'
 import LoginCaptain from './components/LoginCaptain'
+import Map from './components/shared/Map'
+import Profile from './components/shared/Profile'
+import About from './components/shared/About'
+import Contact from './components/shared/Contact'
 
 const appRouter = createBrowserRouter([
   {path: '/', element:<Home/>},
@@ -15,6 +19,9 @@ const appRouter = createBrowserRouter([
   {path: '/loginUser', element: <LoginUser/>},
   {path: '/signCaptain', element: <SignUpCaptain/>},
   {path: '/loginCaptain', element: <LoginCaptain/>},
+  {path: '/profile', element: <Profile/>},
+  {path: '/about', element: <About/>},
+  {path: '/contact', element: <Contact/>},
 
 ])
 

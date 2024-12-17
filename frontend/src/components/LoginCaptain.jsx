@@ -29,8 +29,8 @@ const LoginCaptain = () => {
         },
         withCredentials: true,
       })
-      const token = res.data.token;
-      localStorage.setItem('token', token);
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('user', JSON.stringify(res.data.user));
       toast.success("Logged in successfully");
       navigate("/");
       setInput({

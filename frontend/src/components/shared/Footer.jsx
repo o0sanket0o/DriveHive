@@ -41,7 +41,7 @@ const Footer = () => {
                 <div className='flex mt-20 flex-col gap-4 justify-start'>
                     <div className='uppercase '>Subscribe to newsletter</div>
                     <div className='flex gap-0 shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)]'>
-                        <input type='text' placeholder='Enter your email address' className='bg-white p-2 rounded w-[200px] rounded-r-none'/>
+                        <input type='text' placeholder='Enter your email address' className='bg-white p-2 rounded w-[200px] rounded-r-none outline-none text-black'/>
                         <button className='bg-black hover:opacity-60 hover:duration-500 rounded-tr w-[6rem] text-white'>Join</button>
                     </div>
                     <div></div>
