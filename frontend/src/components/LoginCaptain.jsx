@@ -5,7 +5,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import axios from 'axios'
 import { CAPTAIN_LOGIN_API } from '../utils/constants'
-import { set } from 'mongoose'
 import toast from 'react-hot-toast'
 
 const LoginCaptain = () => {
