@@ -11,7 +11,7 @@ import rideRouter from './routes/ride.routes.js';
 import captainRouter from './routes/captain.router.js';
 const app = express();
 const corsOptions = {
-    origin: ["http://localhost:5173", "https://drive-hive.vercel.app/"],
+    origin: ["http://localhost:5173", "https://drive-hive.vercel.app"],
     credentials: true,
     methods: "GET, POST, PUT, DELETE",
     allowedHeaders: "Content-Type, Authorization",
