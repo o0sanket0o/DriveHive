@@ -34,15 +34,15 @@ const Map = () => {
       }
     };
     
-    loadGoogleMapsScript();
+    // loadGoogleMapsScript();
   },[latitude, longitude]);
 
   return (
     <div>
-      <div className="w-full"
+      {/* <div className="w-full"
        id="map" ref={mapRef}
         style={{ height: "550px", width: "650px" }}>
-        </div> 
+        </div>  */}
     </div>
   );
 };

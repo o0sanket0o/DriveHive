@@ -84,7 +84,7 @@ const Navbar = () => {
             </ul>
           </div>
         ) : (
-          <div className="flex justify-center gap-4 items-center text-white">
+          <div className="flex justify-center gap-4 items-center text-white mr-4">
             <button
               className=" bg-white py-2 px-4 text-black rounded"
               onClick={() => {

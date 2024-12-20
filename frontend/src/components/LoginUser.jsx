@@ -74,8 +74,8 @@ const LogInUser = () => {
               </div>
               <div className='w-full'>
               <button onClick={handleSubmit} className='bg-black text-white p-2 rounded w-full mb-4 mt-2'>Login</button>
-              <p>Join as a fleet?<Link to='/signCaptain' className='text-blue-500 hover:underline'>Register as a captain</Link> </p>
-              <p>Don't have an account?<Link to='/signUser' className='text-blue-500 hover:underline'>Sign Up</Link> </p>
+              <p>Join as a fleet? <Link to='/signCaptain' className='text-blue-500 hover:underline'>Register as a captain</Link> </p>
+              <p>Don't have an account? <Link to='/signUser' className='text-blue-500 hover:underline'>Sign Up</Link> </p>
               </div>
             </div>
           </form>
