@@ -47,7 +47,8 @@ export const registerCaptain = async(req, res) => {
                 lastName: newCaptain.lastName,
                 email: newCaptain.email,
                 vehicle: newCaptain.vehicle
-            }
+            },
+            success: true,
         })
     }
     catch(err){
@@ -88,6 +89,7 @@ export const loginCaptain = async (req, res) => {
                 lastName: captain.lastName,
                 email: captain.email,
                 vehicle: captain.vehicle,
+                role: 'captain'
             }
         })
     }catch(err){

@@ -25,10 +25,12 @@ export const register = async (req, res) => {
             password: hashedPassword
         })
         await user.save();
+        const token = jwt.sign({id: user._id, email: user.email, firstName: user.firstName, lastName: user.lastName}, process.env.JWT_SECRET, {expiresIn: "24h"});
         return res.status(201).json({
             message: "User created successfully.",
             user: user,
             success: true,
+            token: token
         })
     }
     catch(err){
@@ -61,6 +63,7 @@ export const login = async (req, res) => {
             firstName: foundUser.firstName,
             lastName: foundUser.lastName,
             id: foundUser._id,
+            role: 'user'
         }
         res.cookie('token', token, {httpOnly: true});
         return res.status(200).json({

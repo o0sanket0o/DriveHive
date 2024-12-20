@@ -5,6 +5,7 @@ import Map from './Map';
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import store from '../../redux/store';
+import toast from 'react-hot-toast';
 import { GET_COORDINATES } from '../../utils/constants';
 import axios from 'axios';
 import { setLatitude, setLongitude } from '../../redux/locationSlice';
@@ -13,26 +14,32 @@ const Dashboard = () => {
     const dispatch = useDispatch();
     const [address, setAddress] = useState('');
     const handleChange = (e) => {
-        console.log("Address is ", address);
+        // console.log("Address is ", address);
         setAddress(e.target.value);
     }
     const latitude = useSelector(state => state.location.latitude);
     const longitude = useSelector(state => state.location.longitude);
     console.log("Latitude and longitude in dashboard ", latitude, longitude);
     const fetchLocation = async (address) => {
-        console.log("Address is", address);
-        const res = await axios.get(GET_COORDINATES, {
-            params: {
-                address: address
-            },
-            headers:{
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
-            }
-        });
-        const {data: {ltd, lng} } = res.data;
-        dispatch(setLatitude(ltd));
-        dispatch(setLongitude(lng));
+        try{
+            const res = await axios.get(GET_COORDINATES, {
+                params: {
+                    address: address
+                },
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            });
+            const {data: {ltd, lng} } = res.data;
+            dispatch(setLatitude(ltd));
+            dispatch(setLongitude(lng));
+        }
+        catch(err){
+            console.log(err);
+            toast.error("Internal Server error.");
+        }
+        // console.log("Address is", address);
     }
   return (
     <div className='mt-16 max-w-[80%] mx-auto'>
@@ -51,7 +58,7 @@ const Dashboard = () => {
                         </div>
                         <button className='bg-black rounded px-4 py-2 w-[65%] sm:w-[65%] text-white mt-4 hover:opacity-70 duration-500 ease-in-out' onClick={(e) => {
                             e.preventDefault();
-                            // fetchLocation(address);
+                            fetchLocation(address);
                         }}>Search</button>
                     </div>
                 </div>

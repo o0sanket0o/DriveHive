@@ -3,9 +3,11 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './db/db.js';
 import cookieParser from 'cookie-parser';
+import mapRoutes from './routes/maps.routes.js'
 dotenv.config();
 //What is dotenv doing?
 import userRouter from './routes/user.router.js';
+import rideRouter from './routes/ride.routes.js';
 import captainRouter from './routes/captain.router.js';
 const app = express();
 const corsOptions = {
@@ -24,6 +26,8 @@ app.use(cookieParser());
 
 app.use('/api/user', userRouter);
 app.use('/api/captain', captainRouter);
+app.use('/maps', mapRoutes);
+app.use('/rides', rideRouter);
 
 
 app.get("/", (req, res) => {
