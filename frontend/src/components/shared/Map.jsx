@@ -1,12 +1,11 @@
 import React, { useEffect, useRef } from "react";
-import { GOOGLE_API_KEY } from "../../utils/constants";
 import { useSelector } from "react-redux";
-
+import { GOOGLE_API_KEY } from "../../utils/constants";
 
 const Map = () => {
   const latitude = useSelector(state => state.location.latitude);
   const longitude = useSelector(state => state.location.longitude);
-  console.log("Latitude and longitude in the map component are", latitude, longitude);
+  // console.log("Latitude and longitude in the map component are", latitude, longitude);
   const mapRef = useRef(null);
   useEffect(() => {
     console.log("Came in use effect.");
@@ -34,15 +33,15 @@ const Map = () => {
       }
     };
     
-    // loadGoogleMapsScript();
+    loadGoogleMapsScript();
   },[latitude, longitude]);
 
   return (
     <div>
-      {/* <div className="w-full"
+      <div className="w-full"
        id="map" ref={mapRef}
         style={{ height: "550px", width: "650px" }}>
-        </div>  */}
+        </div>  
     </div>
   );
 };

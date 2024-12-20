@@ -58,7 +58,7 @@ const Dashboard = () => {
                         </div>
                         <button className='bg-black rounded px-4 py-2 w-[65%] sm:w-[65%] text-white mt-4 hover:opacity-70 duration-500 ease-in-out' onClick={(e) => {
                             e.preventDefault();
-                            // fetchLocation(address);
+                            fetchLocation(address);
                         }}>Search</button>
                     </div>
                 </div>
