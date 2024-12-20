@@ -6,7 +6,6 @@ import axios from 'axios'
 import toast from 'react-hot-toast'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Captain } from '../../../Backend/models/captain.model'
 import { CAPTAIN_REGISTER_API } from '../utils/constants'
 
 const SignUpCaptain = () => {
