@@ -9,16 +9,15 @@ const generateOtp = (num) => {
     }
     //I am not using Math.floor since it is very predictable. So for security purpose I am using crypto. 
 
-export const createRide = async ({userId, pickup, destination, vehicleType}) => {
-    // console.log(userId, pickup, destination, vehicleType);
-    if(!userId || !pickup || !destination || !vehicleType){
-        throw new Error('UserId, Pickup, Destination and VehicleType are required');
+export const createRide = async ({captainId, pickup, destination, vehicleType}) => {
+    // console.log(captainId, pickup, destination, vehicleType);
+    if(!captainId || !pickup || !destination || !vehicleType){
+        throw new Error('CaptainId, Pickup, Destination and VehicleType are required');
     }
-
     const {distance, duration} = await getDistanceTime(pickup, destination);
     const fare = getFare(parseInt(distance), vehicleType);
     const ride = new Ride({
-        user: userId,
+        captain: captainId,
         pickup,
         destination,
         distance : parseInt(distance),

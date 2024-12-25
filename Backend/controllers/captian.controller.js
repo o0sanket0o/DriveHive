@@ -42,11 +42,13 @@ export const registerCaptain = async(req, res) => {
         return res.status(201).json({
             message:"Captain registered successfully",
             token: token,
-            captain: {
+            user: {
                 firstName: newCaptain.firstName,
                 lastName: newCaptain.lastName,
                 email: newCaptain.email,
-                vehicle: newCaptain.vehicle
+                id: newCaptain._id,
+                role: 'captain',
+                vehicle: newCaptain.vehicle.vehicleType,
             },
             success: true,
         })
@@ -56,13 +58,14 @@ export const registerCaptain = async(req, res) => {
     }
 }
 export const loginCaptain = async (req, res) => {
+    // console.log("Entered login captain with request", req.body);
     const results = validationResult(req);
     if(!results.isEmpty()){
         return res.status(400).json({errors: results.array()});
     }
     const {email, password} = req.body;
     try{
-        const captain = await Captain.findOne({email});
+        let captain = await Captain.findOne({email});
         if(!captain){
             return res.status(400).json({message: "Captain does not exist."});
         }
@@ -77,6 +80,14 @@ export const loginCaptain = async (req, res) => {
             lastName: captain.lastName,
             vehicle: captain.vehicle,
         }
+        captain = {
+            email: captain.email,
+            firstName: captain.firstName,
+            lastName: captain.lastName,
+            id: captain._id,
+            role: 'captain',
+            vehicle: captain.vehicle,
+        }
         const token = jwt.sign(tokenData, process.env.JWT_SECRET, {expiresIn: "24h"});
         res.cookie('token', token, {httpOnly: true});
         //It means that the cookie is only accessible by the http requests like get/post/put/delete.
@@ -84,13 +95,15 @@ export const loginCaptain = async (req, res) => {
         return res.status(200).json({
             message: "Logged in successfully",
             token: token,
-            captain: {
+            success: true, 
+            user: {
                 firstName: captain.firstName,
                 lastName: captain.lastName,
                 email: captain.email,
-                vehicle: captain.vehicle,
-                role: 'captain'
-            }
+                id: captain._id,
+                role: 'captain',
+                vehicle: captain.vehicle.vehicleType,
+            },
         })
     }catch(err){
         return res.status(500).json({message: err.message});

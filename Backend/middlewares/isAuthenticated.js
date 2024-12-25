@@ -40,6 +40,9 @@ export const isAuthCaptain = async (req, res, next) => {
         if(!decoded) return res.status(401).json({message: "Unauthorized"});
         const captainInDb = await Captain.findById(decoded.id);
         req.captain = captainInDb;
+        let id = captainInDb._id;
+        req.body.captainId = id.toString();
+        // console.log(req.body.captainId);
         next();
     }
     catch(err){

@@ -7,8 +7,11 @@ import toast from 'react-hot-toast'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { USER_REGISTER_API } from '../utils/constants';
+import { useDispatch } from 'react-redux';
+import { setLoading } from '../redux/loadingSlice';
 
 const SignUpUser = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [input, setInput] = useState({
     firstName: '',
@@ -23,6 +26,7 @@ const SignUpUser = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
     try{
+      dispatch(setLoading(true));
       const link = USER_REGISTER_API;
       const res = await axios.post(link, input, {
         headers: {
@@ -31,15 +35,19 @@ const SignUpUser = () => {
         withCredentials: true,
       })
       if(res.data.success){
-        toast.success(res.data.message);
-        navigate('/');
         localStorage.setItem('token', res.data.token);
+        localStorage.setItem('user', JSON.stringify(res.data.user));
         setInput({
           firstName: '',
           lastName: '',
           email: '',
           password: ''
         })
+        navigate('/');
+        setTimeout(() => {
+          dispatch(setLoading(false));
+          toast.success(res.data.message);
+        }, 2000);
       }else{
         toast.error(res.data.message);
       }

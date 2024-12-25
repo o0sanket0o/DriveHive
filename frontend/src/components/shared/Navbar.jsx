@@ -16,17 +16,17 @@ const Navbar = () => {
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (localStorage.getItem("user")) {
-      dispatch(setUser(JSON.parse(localStorage.getItem("user"))));
-    }
-  }, []);
+    const strUser = localStorage.getItem("user");
+    const userObj = JSON.parse(strUser);
+    dispatch(setUser(userObj));
+  }, [])
   const logout = async () => {
     try {
       localStorage.removeItem("user");
       dispatch(setUser(null));
       navigate("/loginUser");
       let token = localStorage.getItem("token");
-      console.log("Token is", token);
+      // console.log("Token is", token);
       localStorage.removeItem("token");
       const res = axios.get(USER_LOGOUT_API, {
         headers: {

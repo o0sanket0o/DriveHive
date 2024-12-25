@@ -12,6 +12,7 @@ import Map from './components/shared/Map'
 import Profile from './components/shared/Profile'
 import About from './components/shared/About'
 import Contact from './components/shared/Contact'
+import CheckRides from './components/shared/CheckRides'
 
 const appRouter = createBrowserRouter([
   {path: '/', element:<Home/>},
@@ -22,6 +23,7 @@ const appRouter = createBrowserRouter([
   {path: '/profile', element: <Profile/>},
   {path: '/about', element: <About/>},
   {path: '/contact', element: <Contact/>},
+  {path: '/findRides', element: <CheckRides />}
 
 ])
 

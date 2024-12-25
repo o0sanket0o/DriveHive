@@ -7,8 +7,11 @@ import toast from 'react-hot-toast'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CAPTAIN_REGISTER_API } from '../utils/constants'
+import { useDispatch } from 'react-redux'
+import {setLoading} from '../redux/loadingSlice'
 
 const SignUpCaptain = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [input, setInput] = useState({
     firstName: '',
@@ -22,11 +25,9 @@ const SignUpCaptain = () => {
   })
   function handleChange(e){
     setInput({...input, [e.target.name]: e.target.value});
-    // console.log("Input is", input);
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log("Final data is ", input);
     const sendData = {
       firstName: input.firstName,
       lastName: input.lastName,
@@ -41,6 +42,7 @@ const SignUpCaptain = () => {
     }
     try{
       const link = CAPTAIN_REGISTER_API;
+      dispatch(setLoading(true));
       const res = await axios.post(link, sendData, {
         header: {
           "Content-Type": "application/json",
@@ -48,7 +50,6 @@ const SignUpCaptain = () => {
         withCredentials: true,
       })
       if(res.data.success){
-        toast.success("Captain registered successfully.");
         setInput({
           firstName: '',
           lastName: '',
@@ -60,13 +61,19 @@ const SignUpCaptain = () => {
           vehicleType: ''
         })
         navigate('/');
+        setTimeout(() => {
+          dispatch(setLoading(false));
+          toast.success(res.data.message);
+        }, 2000);
         localStorage.setItem('token', res.data.token);
+        localStorage.setItem('user', JSON.stringify(res.data.user));
       }else{
         toast.error(res.data.message);
       }
     }
     catch(err){
       console.log("Error is ", err);
+      toast.error("All fields are required.");
     }
 
   }

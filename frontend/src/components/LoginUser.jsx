@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 import { USER_LOGIN_API } from '../utils/constants';
 import {useDispatch, useSelector} from "react-redux";
 import { setUser } from '../redux/authSlice';
+import { setLoading } from '../redux/loadingSlice';
 
 
 const LogInUser = () => {
@@ -23,6 +24,7 @@ const LogInUser = () => {
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(setLoading(true));
     try{
       const link = USER_LOGIN_API;
       const res = await axios.post(link, input, {
@@ -34,8 +36,11 @@ const LogInUser = () => {
       // console.log("Response is", res);
       if(res.data.success){
         dispatch(setUser(res.data.user));
-        toast.success(res.data.message);
         navigate('/');
+        setTimeout(() => {
+          dispatch(setLoading(false));
+          toast.success(res.data.message);
+        }, 2000);
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', JSON.stringify(res.data.user));
         setInput({

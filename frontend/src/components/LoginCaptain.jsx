@@ -6,8 +6,11 @@ import { useState } from 'react'
 import axios from 'axios'
 import { CAPTAIN_LOGIN_API } from '../utils/constants'
 import toast from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
+import { setLoading } from '../redux/loadingSlice'
 
 const LoginCaptain = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [input, setInput] = useState({
     email: '',
@@ -22,6 +25,7 @@ const LoginCaptain = () => {
     // console.log("Final data is ", input);
     const link = CAPTAIN_LOGIN_API;
     try{
+      dispatch(setLoading(true));
       const res = await axios.post(link, input, {
         header: {
           "Content-Type": "application/json",
@@ -30,8 +34,11 @@ const LoginCaptain = () => {
       })
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data.user));
-      toast.success("Logged in successfully");
-      navigate("/");
+      navigate('/')
+      setTimeout(() => {
+        dispatch(setLoading(false));
+        toast.success(res.data.message);
+      }, 2000);
       setInput({
         email: '',
         password: ''

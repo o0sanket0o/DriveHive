@@ -5,10 +5,10 @@ const rideSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
     },
     captain: {
         type: mongoose.Schema.Types.ObjectId,
+        required: true,
         ref: 'Captain',
     },
     //Whichever captain will accept the ride will be assigned to the ride

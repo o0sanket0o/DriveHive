@@ -8,7 +8,7 @@ const Map = () => {
   // console.log("Latitude and longitude in the map component are", latitude, longitude);
   const mapRef = useRef(null);
   useEffect(() => {
-    console.log("Came in use effect.");
+    // console.log("Came in use effect.");
     const loadGoogleMapsScript = () => {
       if (!document.getElementById("googleMaps")) {
         const script = document.createElement("script");
@@ -38,6 +38,7 @@ const Map = () => {
 
   return (
     <div>
+      {/* <div>Hello</div> */}
       <div className="w-full"
        id="map" ref={mapRef}
         style={{ height: "550px", width: "650px" }}>

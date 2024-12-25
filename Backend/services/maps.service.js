@@ -54,8 +54,10 @@ export const autoSuggestions = async (input) => {
     try{
         const response = await axios.get(url);
         if(response.data.status !== 'OK'){
+            console.log("Error");
             throw new Error('Unable to fetch the data');
         }else{
+            let ans = response.data;
             return response.data.predictions;
         }
     }
