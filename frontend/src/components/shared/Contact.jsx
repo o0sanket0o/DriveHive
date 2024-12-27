@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from './Navbar'
-import Location from '../../../dist/assets/Location.png'
+import Location from '../../Images/Location.png'
 import { FaPhoneAlt } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoIosMail } from "react-icons/io";
