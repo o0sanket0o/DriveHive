@@ -13,7 +13,6 @@ import { setLoading } from "../../redux/loadingSlice";
 import { GET_COORDINATES } from "../../utils/constants";
 import { setStartSlice } from "../../redux/startSlice";
 import { setEndSlice } from "../../redux/endSlice";
-import { fetchRides } from "../../../../Backend/controllers/ride.controller";
 
 const CheckRides = () => {
   const startLocation = useSelector((state) => state.start.startValue);
