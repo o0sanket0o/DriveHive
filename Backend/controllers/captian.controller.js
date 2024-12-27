@@ -69,6 +69,7 @@ export const loginCaptain = async (req, res) => {
         if(!captain){
             return res.status(400).json({message: "Captain does not exist."});
         }
+        // console.log("We found", captain);
         const isMatch = await bcrypt.compare(password, captain.password);
         if(!isMatch){
             return res.status(400).json({message: "Invalid credentials."});
@@ -88,10 +89,12 @@ export const loginCaptain = async (req, res) => {
             role: 'captain',
             vehicle: captain.vehicle,
         }
+        // console.log("Captain became", captain);
         const token = jwt.sign(tokenData, process.env.JWT_SECRET, {expiresIn: "24h"});
         res.cookie('token', token, {httpOnly: true});
         //It means that the cookie is only accessible by the http requests like get/post/put/delete.
         //And can't be accessed by the javascript code like document.getCookie.
+        // console.log("Id of captain is ", captain.id);
         return res.status(200).json({
             message: "Logged in successfully",
             token: token,
@@ -100,7 +103,7 @@ export const loginCaptain = async (req, res) => {
                 firstName: captain.firstName,
                 lastName: captain.lastName,
                 email: captain.email,
-                id: captain._id,
+                id: captain.id,
                 role: 'captain',
                 vehicle: captain.vehicle.vehicleType,
             },

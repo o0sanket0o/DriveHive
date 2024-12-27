@@ -38,7 +38,7 @@ const Map = () => {
 
   return (
     <div>
-      {/* <div>Hello</div> */}
+      {/* <div className="text-black">Hello</div> */}
       <div className="w-full"
        id="map" ref={mapRef}
         style={{ height: "550px", width: "650px" }}>

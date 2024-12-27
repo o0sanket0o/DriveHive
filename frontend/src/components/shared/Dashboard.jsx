@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import store from "../../redux/store";
 import toast from "react-hot-toast";
-import { GET_COORDINATES } from "../../utils/constants";
+import { ADD_RIDE_API, GET_COORDINATES } from "../../utils/constants";
 import axios from "axios";
 import { setLatitude, setLongitude } from "../../redux/locationSlice";
 import { useNavigate } from "react-router-dom";
@@ -15,9 +15,29 @@ import {setStartSlice} from "../../redux/startSlice";
 import {setEndSlice} from "../../redux/endSlice";
 
 const Dashboard = () => {
+  const addRide = async (captainId, pickup, destination, vehicleType) => {
+    let link = ADD_RIDE_API;
+    // console.log(captainId, pickup, destination, vehicleType, link);
+    try{
+      const res = await axios.post(link, {captainId: captainId, pickup: pickup, destination:destination, vehicleType:vehicleType}, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      })
+      if(res.status === 201){
+        toast.success("Ride added successfully.");
+      }
+    }
+    catch(err){
+      console.log(err);
+      toast.error("Couldn't add the ride.");
+    }
+  }
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
+  // console.log("User is", user);  
   const [address, setAddress] = useState("");
   const [start, setStart] = useState("");
   const [chosen, setChosen] = useState(0);
@@ -27,14 +47,12 @@ const Dashboard = () => {
     if (e.target.name === "pick"){
         setChosen(1);
         setStart(e.target.value);
-        // dispatch(setStart(e.target.value));
-        dispatch(setStartSlice(start));
+        dispatch(setStartSlice(e.target.value));
     } 
     else{
         setChosen(2);
         setAddress(e.target.value);
-        // dispatch(setEnd(e.target.value));
-        dispatch(setEndSlice(address));
+        dispatch(setEndSlice(e.target.value));
     } 
     let link = `${GET_SUGGESTIONS_API}?input=${e.target.value}`;
     const res = await axios.get(link, {
@@ -132,13 +150,19 @@ const Dashboard = () => {
                     toast.caller("Please fill both the fields.");
                     return;
                   }else{
-                    e.preventDefault();
-                    dispatch(setStartSlice(start));
-                    dispatch(setEndSlice(address));
-                    // fetchLocation(address);
-                    // setTimeout(() => {
-                    // }, 2000)
-                    btnText === "Search" ? navigate("/findRides") : navigate("/");
+                    if(user.role === 'user'){
+                      e.preventDefault();
+                      dispatch(setStartSlice(start));
+                      dispatch(setEndSlice(address));
+                      fetchLocation(address);
+                      navigate("/findRides");
+                    }else{
+                      e.preventDefault();
+                      dispatch(setStartSlice(start));
+                      dispatch(setEndSlice(address));
+                      fetchLocation(address);
+                      addRide(user.id, start, address, user.vehicle);
+                    }
                   }
                 }}
               >

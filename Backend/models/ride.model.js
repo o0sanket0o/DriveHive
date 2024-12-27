@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
-import { type } from 'os';
 
 const rideSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
+        default: null,
     },
     captain: {
         type: mongoose.Schema.Types.ObjectId,

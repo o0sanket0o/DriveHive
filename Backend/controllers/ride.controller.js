@@ -8,6 +8,7 @@ export const rideController = async (req, res) => {
         return res.status(400).json({errors: errors.array()});
     }
     const {captainId, pickup, destination, vehicleType} = req.body;
+    console.log(captainId, pickup, destination, vehicleType);
     try{
         const ride = await createRide({captainId, pickup, destination, vehicleType});
         return res.status(201).json(ride);

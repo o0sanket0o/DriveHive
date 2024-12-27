@@ -8,6 +8,26 @@ const generateOtp = (num) => {
         return otp;
     }
     //I am not using Math.floor since it is very predictable. So for security purpose I am using crypto. 
+export const bookRide = async (req, res) => {
+    try{
+        const {userId, rideId} = req.body;
+        const ride = await Ride.findById(rideId);
+        if(!ride){
+            return res.status(404).json({message: "Ride not found"});
+        }
+        if(ride.user){
+            return res.status(400).json({message: "Ride already booked"});
+        }
+        ride.user = userId;
+        ride.status = 'accepted';
+        await ride.save();
+        res.json({message: "Ride booked successfully"});
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({message: "Couldn't book the ride"});
+    }
+}
 
 export const createRide = async ({captainId, pickup, destination, vehicleType}) => {
     // console.log(captainId, pickup, destination, vehicleType);
@@ -33,4 +53,24 @@ const getFare = (distance, vehicleType) => {
     if(vehicleType == 'auto') return (10 * distance);
     else if(vehicleType == 'car') return (15 * distance);
     return (8 * distance);
+}
+
+export const endRide = async(req, res) => {
+    try{
+        const {captainId, rideId} = req.body;
+        const ride = await Ride.findById(rideId);
+        if(!ride){
+            return res.status(404).json({message: "Ride not found"});
+        }
+        if(ride.captain != captainId){
+            return res.status(401).json({message: "Unauthorized"});
+        }
+        ride.status = 'completed';
+        await ride.save();
+        res.json({message: "Ride ended successfully."});
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({message: "Couldn't end the ride"});
+    }
 }

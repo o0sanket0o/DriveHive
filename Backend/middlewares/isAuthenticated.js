@@ -32,6 +32,7 @@ export const isAuthenticated = async (req, res, next) => {
 }
 export const isAuthCaptain = async (req, res, next) => {
     try{
+        // console.log("Entered in isAuthCaptain function in isAuthenticated.js");
         const token = req.cookies.token || req.headers?.authorization?.split(" ")[1];
         if(!token) return res.status(401).json({message: "Unauthorized"});
         const isBlacklisted = await blacklistTokenModel.findOne({token: token});

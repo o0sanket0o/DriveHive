@@ -6,7 +6,7 @@ import { query } from "express-validator";
 
 router.get('/get-coordinates',
     query('address').isString().isLength({min: 3}),
-    isAuthenticated, getCoordinates
+    getCoordinates
 )
 
 router.get('/get-distance-time', 
@@ -16,7 +16,7 @@ router.get('/get-distance-time',
 )
 router.get('/get-suggestions', 
     query('input').isString().isLength({min: 3}),
-    isAuthenticated, getSuggestions 
+    getSuggestions 
 )
 //This gives a response like this when i search for AIMS hospital:
 // {

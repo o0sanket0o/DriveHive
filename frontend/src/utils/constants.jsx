@@ -7,7 +7,11 @@ export const GOOGLE_API_KEY = 'AIzaSyACV6sEdWz8o2iOyOO7Iacm1i9xkBvwR0I';
 export const GET_COORDINATES = 'https://drivehive.onrender.com/maps/get-coordinates';
 export const USER_LOGOUT_API = 'https://drivehive.onrender.com/api/user/logout';
 export const FETCH_RIDES_API = 'https://drivehive.onrender.com/rides/fetch';
+export const FETCH_RIDES_DRIVER__API = 'https://drivehive.onrender.com/rides/fetchDriver';
 export const GET_SUGGESTIONS_API = 'https://drivehive.onrender.com/maps/get-suggestions';
+export const BOOK_RIDE_API = 'https://drivehive.onrender.com/rides/book';
+export const END_RIDE_API = 'https://drivehive.onrender.com/rides/endRide';
+export const ADD_RIDE_API = 'https://drivehive.onrender.com/rides/create';
 
 
 // export const USER_REGISTER_API = 'http://localhost:8000/api/user/register'
@@ -19,4 +23,8 @@ export const GET_SUGGESTIONS_API = 'https://drivehive.onrender.com/maps/get-sugg
 // export const GET_COORDINATES = 'http://localhost:8000/maps/get-coordinates';
 // export const USER_LOGOUT_API = 'http://localhost:8000/api/user/logout';
 // export const FETCH_RIDES_API = 'http://localhost:8000/rides/fetch';
+// export const FETCH_RIDES_DRIVER__API = 'http://localhost:8000/rides/fetchDriver';
 // export const GET_SUGGESTIONS_API = 'http://localhost:8000/maps/get-suggestions';
+// export const BOOK_RIDE_API = 'http://localhost:8000/rides/book';
+// export const END_RIDE_API = 'http://localhost:8000/rides/endRide';
+// export const ADD_RIDE_API = 'http://localhost:8000/rides/create';
